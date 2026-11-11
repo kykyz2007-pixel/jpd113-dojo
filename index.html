@@ -155,6 +155,10 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .mi span{font-size:12px;color:var(--sumi2);display:block}
 .fuji{position:fixed;right:-30px;bottom:40px;width:300px;opacity:.25;z-index:0;pointer-events:none}
 .hide{display:none!important}
+.card img,.figimg,.mi img{cursor:zoom-in}
+.zoomov{position:fixed;inset:0;z-index:999;background:rgba(20,15,10,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;animation:slide .2s}
+.zoomov img{max-width:96vw;max-height:88vh;background:#fff;border-radius:10px;box-shadow:0 10px 40px #000a}
+.zoomov .zx{color:#fff;margin-top:10px;font-size:15px;font-weight:700}
 .figimg{max-width:100%;max-height:440px;border-radius:10px;border:3px solid var(--sumi);background:#fff}
 .picc{min-height:auto}
 .figgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin:4px 0 14px}
@@ -271,6 +275,18 @@ function speakText(q){
   if(q.kind==="kan") return q.kj[1];
   return "";
 }
+
+
+/* click image to zoom */
+document.addEventListener("click",e=>{
+  const im=e.target.closest(".card img, .figimg, .mi img");
+  if(!im || e.target.closest(".figbtn")) return;
+  e.stopPropagation(); e.preventDefault();
+  const ov=document.createElement("div"); ov.className="zoomov";
+  ov.innerHTML=`<img src="${im.src}"><div class="zx">✕ Bấm bất kỳ đâu hoặc Esc để đóng</div>`;
+  ov.onclick=()=>ov.remove(); document.body.appendChild(ov);
+},true);
+document.addEventListener("keydown",e=>{ const o=document.querySelector(".zoomov"); if(o && e.key==="Escape"){ o.remove(); e.stopImmediatePropagation(); } },true);
 
 /* sound */
 let ac=null;
