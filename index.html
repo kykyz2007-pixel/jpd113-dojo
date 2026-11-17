@@ -327,13 +327,15 @@ function mtSetup(){
   $("#fb1").onclick=()=>{store.set("mtfb",true);mtSetup();}; $("#fb0").onclick=()=>{store.set("mtfb",false);mtSetup();};
   $("#go").onclick=()=>{ const L=D.mt.filter(x=>de==="all"||x.de===de); G={mode:"mt", mt:{L, i:0, pick:null, shown:false, ans:[], fb, t0:Date.now(), de}}; mtRender(); };
 }
+function mtFmt(ms){ const s=Math.floor(ms/1000), h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60; return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0"); }
+setInterval(()=>{ const c=document.getElementById("mtclk"); if(c && G && G.mt) c.textContent="⏱ "+mtFmt(Date.now()-G.mt.t0); },1000);
 function mtRender(){
   const M=G.mt; if(M.i>=M.L.length) return mtEnd();
   const q=M.L[M.i], prev=M.L[M.i-1];
   const showP = !!q.p;
   const st = (k)=> M.shown ? (k===q.a?"ok":(k===M.pick?"bad":"")) : "";
   app.innerHTML=`<div class="hud"><button class="back" id="bk">←</button>
-    <div class="rope"><i style="width:${M.i/M.L.length*100}%"></i><span class="lan emo" style="left:${M.i/M.L.length*100}%">🏮</span></div><div class="koban">${M.de==="all"?"Đề "+q.de:"Đề "+M.de}</div></div>
+    <div class="rope"><i style="width:${M.i/M.L.length*100}%"></i><span class="lan emo" style="left:${M.i/M.L.length*100}%">🏮</span></div><div class="koban" id="mtclk" title="Thời gian đã làm">⏱ ${mtFmt(Date.now()-M.t0)}</div><div class="koban">${M.de==="all"?"Đề "+q.de:"Đề "+M.de}</div></div>
   <div class="mtw"><div class="mtq">
     <div class="mtins">${esc(q.ins)}</div>
     ${showP?`<div class="mtp">${q.p}</div>`:""}
@@ -356,14 +358,14 @@ function mtNext(){
 }
 function mtEnd(){
   const M=G.mt, L=M.L; const ok=L.filter((q,i)=>M.ans[i]===q.a).length;
-  const pt=Math.round(ok/L.length*100)/10, min=Math.round((Date.now()-M.t0)/60000);
+  const pt=Math.round(ok/L.length*100)/10, ms=Date.now()-M.t0, min=mtFmt(ms);
   const best=store.get("best",{}); const pct=Math.round(ok/L.length*100); if(best.mt==null||pct>best.mt){best.mt=pct;store.set("best",best);}
   store.set("xp",store.get("xp",0)+ok*10);
   beep("win"); setTimeout(()=>confetti(innerWidth/2, innerHeight/3, pct>=75?80:30),200);
   const wrong=L.map((q,i)=>[q,M.ans[i]]).filter(([q,a])=>a!==q.a);
   app.innerHTML=`<div class="end"><div class="hanko">${pct>=90?"優":pct>=75?"良":pct>=50?"可":"頑"}</div>
-   <h2>${pt.toLocaleString("vi")} / 10 điểm</h2><div style="color:var(--sumi2)">Mini Test · ${M.de==="all"?"cả 2 đề":"đề "+M.de} · ${min} phút</div>
-   <div class="stats"><div class="stat"><b>${ok}/${L.length}</b><span>Câu đúng</span></div><div class="stat"><b>${pct}%</b><span>Tỉ lệ</span></div><div class="stat"><b>${wrong.length}</b><span>Câu sai</span></div></div>
+   <h2>${pt.toLocaleString("vi")} / 10 điểm</h2><div style="color:var(--sumi2)">Mini Test · ${M.de==="all"?"cả 2 đề":"đề "+M.de} · ⏱ ${min}</div>
+   <div class="stats"><div class="stat"><b>${ok}/${L.length}</b><span>Câu đúng</span></div><div class="stat"><b>${pct}%</b><span>Tỉ lệ</span></div><div class="stat"><b>${wrong.length}</b><span>Câu sai</span></div><div class="stat"><b>${min}</b><span>Thời gian</span></div><div class="stat"><b>${Math.round(ms/1000/L.length)}s</b><span>Trung bình/câu</span></div></div>
    <div class="btns">${wrong.length?`<button class="btn red" id="mre">🔁 Làm lại ${wrong.length} câu sai</button>`:""}<button class="btn" id="mag">Làm lại cả đề</button><button class="btn" id="hm">Trang chính</button></div>
    ${wrong.length?`<h3 style="text-align:left;margin:18px 0 6px">📜 Câu sai</h3>`+wrong.map(([q,a])=>`<div class="mtx"><div style="font-size:13px;color:var(--ai);font-weight:800">${esc(q.ins)}</div><div class="jpq">${q.q}</div>
      <div style="margin-top:6px">Bạn chọn <b style="color:var(--aka)">${"ABCD"[a]}. </b><span class="jp">${esc(q.o[a])}</span><br>Đúng: <b style="color:var(--matcha)">${"ABCD"[q.a]}. </b><span class="jp">${esc(q.o[q.a])}</span><br>💡 ${q.ex}</div></div>`).join(""):`<p>Không sai câu nào 🎉</p>`}</div>`;
