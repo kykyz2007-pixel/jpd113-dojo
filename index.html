@@ -167,9 +167,11 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .og-emo{margin-left:auto;font-size:28px;letter-spacing:4px}
 .og-row{display:flex;align-items:center;gap:14px;border:2px solid;border-radius:12px;padding:9px 20px;margin-bottom:9px;font-size:21px;color:#222;box-shadow:0 2px 0 #0001}
 .og-n{flex:none;width:32px;height:32px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font:800 16px "Be Vietnam Pro",sans-serif}
-.og-bai{background:#fff;border:1px solid #ccc;box-shadow:0 4px 18px #0002;padding:46px 70px;color:#111}
+.og-bai{background:#fff;border:1px solid #ccc;box-shadow:0 4px 18px #0002;padding:36px 44px;color:#111}
 .og-bai h3{text-align:center;font:800 24px "Be Vietnam Pro",sans-serif;margin:0 0 24px;padding-bottom:10px;border-bottom:2px solid #222}
 .og-bai p{font-size:25px;line-height:1.5;margin:0 0 14px}
+.og-para{font-size:26px!important;line-height:1.95!important;text-align:left;word-break:normal}
+.og-de2 h3{border-bottom:0;text-align:left}
 .og-foot{text-align:center;margin-top:12px;font-size:13px;font-weight:700;color:var(--sumi2)}
 
 /* READING (よみかた) */
@@ -420,15 +422,12 @@ const RDC=[["#fde4e1","#e8a49c","#c9473a"],["#fff0d6","#e7b56a","#c47f12"],["#e1
 function rdRender(){
   const i=G.rd, x=D.rd[i], same=D.rd.map((y,k)=>[y,k]).filter(([y])=>y.src===x.src).map(([,k])=>k), p=same.indexOf(i);
   const firstOf=src=>D.rd.findIndex(y=>y.src===src);
-  const page = x.src==="de"
-   ? `<div class="og og-de"><div class="og-top"><span class="og-pill">${esc(x.t.toUpperCase())}</span><span class="og-emo emo">${esc(x.e||"")}</span></div>
-      ${x.s.map((s,k)=>{const c=RDC[k%5];return `<div class="og-row" style="background:${c[0]};border-color:${c[1]}"><span>${esc(s)}</span></div>`}).join("")}</div>`
-   : `<div class="og og-bai"><h3>${esc(x.t.toUpperCase())}</h3>${x.s.map((s,k)=>`<p>${esc(s)}</p>`).join("")}</div>`;
+  const page = `<div class="og og-bai ${x.src==="de"?"og-de2":""}"><h3>${esc(x.t.toUpperCase())}</h3><p class="og-para">${x.s.map(s=>esc(s.replace(/[　 ]+/g," ").trim())).join(" ")}</p></div>`;
   app.innerHTML=`<div class="hud"><button class="back" id="bk">←</button>
     <div class="og-tabs"><button class="chip ${x.src==="de"?"on":""}" id="tde">Luyện đọc · Đề 1–10</button><button class="chip ${x.src==="bai"?"on":""}" id="tbai">Luyện đọc JPD113</button></div>
     <div class="koban" id="mtclk">⏱ ${mtFmt(Date.now()-G.mt.t0)}</div></div>
   <div class="og-wrap"><button class="og-arr" id="pv" ${p<=0?"disabled":""}>‹</button>${page}<button class="og-arr" id="nx2" ${p>=same.length-1?"disabled":""}>›</button></div>
-  <div class="og-foot">${x.t} · ${p+1}/${same.length} &nbsp;·&nbsp; phím ← → để lật trang</div>`;
+  <div class="og-foot">${x.t} · ${p+1}/${same.length} &nbsp;·&nbsp; phím ← → để lật trang &nbsp;·&nbsp; bản 17/11 21:40</div>`;
   const go=k=>{ G.rd=k; G.mt.t0=Date.now(); store.set("rdlast",k); rdRender(); window.scrollTo(0,0); };
   $("#bk").onclick=home;
   $("#tde").onclick=()=>go(firstOf("de")); $("#tbai").onclick=()=>go(firstOf("bai"));
