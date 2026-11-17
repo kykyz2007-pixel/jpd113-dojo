@@ -532,6 +532,8 @@ function buildRound(mode, N){
 }
 const NEKO = `<svg width="86" height="86" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 40 L22 10 L42 28 Z" fill="#fff" stroke="#2b2420" stroke-width="4" stroke-linejoin="round"/><path d="M82 40 L78 10 L58 28 Z" fill="#fff" stroke="#2b2420" stroke-width="4" stroke-linejoin="round"/><path d="M24 16 L27 30 L36 27Z" fill="#f6b8c8"/><ellipse cx="50" cy="56" rx="38" ry="33" fill="#fff" stroke="#2b2420" stroke-width="4"/><path d="M60 26 Q72 22 84 34 Q74 30 66 34Z" fill="#e8a24a"/><rect x="13" y="32" width="74" height="10" rx="4" fill="#d23b2e"/><circle cx="50" cy="37" r="6" fill="#fff"/><circle cx="50" cy="37" r="3.2" fill="#d23b2e"/><path d="M86 34 l10 -6 l-2 10z" fill="#d23b2e"/><path d="M34 58 q5 -6 10 0" fill="none" stroke="#2b2420" stroke-width="4" stroke-linecap="round"/><path d="M56 58 q5 -6 10 0" fill="none" stroke="#2b2420" stroke-width="4" stroke-linecap="round"/><ellipse cx="30" cy="68" rx="6" ry="3.5" fill="#f6b8c8"/><ellipse cx="70" cy="68" rx="6" ry="3.5" fill="#f6b8c8"/><path d="M44 68 q6 6 12 0" fill="none" stroke="#2b2420" stroke-width="3.5" stroke-linecap="round"/><path d="M14 62h12M14 70h12M74 62h12M74 70h12" stroke="#2b2420" stroke-width="2.5" stroke-linecap="round"/></svg>`;
 const MODES = [
+  {id:"rd", ic:"読", c:"#fde9d9", t:"Luyện đọc · よみかた", d:"Đề 1–10 + Luyện đọc 113 (Bài 1–15) · mỗi trang 1 đề, đọc to như thi"},
+  {id:"mt", ic:"試", c:"#e6edf9", t:"Mini Test · đề của cô", d:"Đề 003 & 004 (50 câu/đề) · làm như thi thật, có giải thích"},
   {id:"speak", ic:"🎤", t:"Thi nói · nhìn hình trả lời", d:"27 hình + 217 câu hỏi trong file Speaking của cô · trả lời bằng micro, đúng ý là đạt"},
   {id:"kjt", ic:"漢", t:"Kanji → gõ romaji", d:"Từng chữ kanji của cô (私, 日本語, 月曜日, 一人…) → tự gõ cách đọc"},
   {id:"flash", ic:"📇", t:"Thẻ học từng chữ", d:"Học thuộc trước: xem chữ + hình → lật thẻ xem romaji, nghĩa · tự đọc phát âm"},
@@ -548,8 +550,6 @@ const MODES = [
   {id:"num", ic:"数", c:"#fff1cc", t:"Bẫy số đặc biệt", d:"しがつ, ついたち, ろっぴゃく… cô hay bẫy!"},
   {id:"part", ic:"を", c:"#f1e6ff", t:"Điền trợ từ", d:"は · を · へ · で · に · から · まで…"},
   {id:"kan", ic:"漢", c:"#ffe6f0", t:"Đọc Kanji", d:"学生, 日本語, 月曜日…"},
-  {id:"rd", ic:"読", c:"#fde9d9", t:"Luyện đọc · よみかた", d:"Đề 1–10 + Luyện đọc 113 (Bài 1–15) · mỗi trang 1 đề, đọc to như thi"},
-  {id:"mt", ic:"試", c:"#e6edf9", t:"Mini Test · đề của cô", d:"Đề 003 & 004 (50 câu/đề) · làm như thi thật, có giải thích"},
   {id:"boss", ic:"鬼", t:"BOSS ONI · Đề tổng hợp", d:"Khó hơn Chơi nhanh: có giới hạn mạng (30 câu = 3 ❤️, 50 = 5, 100+ = 7). Hạ được Oni là sẵn sàng đi thi!", boss:true},
 ];
 
