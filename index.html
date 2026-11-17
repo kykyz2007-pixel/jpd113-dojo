@@ -165,7 +165,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .og-pill{background:#1c2b45;color:#fff;font:800 17px "Be Vietnam Pro",sans-serif;padding:6px 20px;border-radius:99px}
 .og-pill2{border:2px solid #1c2b45;color:#1c2b45;font:800 15px "Be Vietnam Pro",sans-serif;padding:4px 18px;border-radius:99px}
 .og-emo{margin-left:auto;font-size:28px;letter-spacing:4px}
-.og-row{display:flex;align-items:center;gap:14px;border:2px solid;border-radius:12px;padding:7px 16px;margin-bottom:9px;font-size:21px;color:#222;box-shadow:0 2px 0 #0001}
+.og-row{display:flex;align-items:center;gap:14px;border:2px solid;border-radius:12px;padding:9px 20px;margin-bottom:9px;font-size:21px;color:#222;box-shadow:0 2px 0 #0001}
 .og-n{flex:none;width:32px;height:32px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font:800 16px "Be Vietnam Pro",sans-serif}
 .og-bai{background:#fff;border:1px solid #ccc;box-shadow:0 4px 18px #0002;padding:46px 70px;color:#111}
 .og-bai h3{text-align:center;font:800 24px "Be Vietnam Pro",sans-serif;margin:0 0 24px;padding-bottom:10px;border-bottom:2px solid #222}
@@ -421,9 +421,9 @@ function rdRender(){
   const i=G.rd, x=D.rd[i], same=D.rd.map((y,k)=>[y,k]).filter(([y])=>y.src===x.src).map(([,k])=>k), p=same.indexOf(i);
   const firstOf=src=>D.rd.findIndex(y=>y.src===src);
   const page = x.src==="de"
-   ? `<div class="og og-de"><div class="og-top"><span class="og-pill">${esc(x.t.toUpperCase())}</span><span class="og-pill2">CÂU 1–10</span><span class="og-emo emo">${esc(x.e||"")}</span></div>
-      ${x.s.map((s,k)=>{const c=RDC[k%5];return `<div class="og-row" style="background:${c[0]};border-color:${c[1]}"><span class="og-n" style="background:${c[2]}">${k+1}</span><span>${esc(s)}</span></div>`}).join("")}</div>`
-   : `<div class="og og-bai"><h3>${esc(x.t.toUpperCase())}</h3>${x.s.map((s,k)=>`<p>${k+1}. ${esc(s)}</p>`).join("")}</div>`;
+   ? `<div class="og og-de"><div class="og-top"><span class="og-pill">${esc(x.t.toUpperCase())}</span><span class="og-emo emo">${esc(x.e||"")}</span></div>
+      ${x.s.map((s,k)=>{const c=RDC[k%5];return `<div class="og-row" style="background:${c[0]};border-color:${c[1]}"><span>${esc(s)}</span></div>`}).join("")}</div>`
+   : `<div class="og og-bai"><h3>${esc(x.t.toUpperCase())}</h3>${x.s.map((s,k)=>`<p>${esc(s)}</p>`).join("")}</div>`;
   app.innerHTML=`<div class="hud"><button class="back" id="bk">←</button>
     <div class="og-tabs"><button class="chip ${x.src==="de"?"on":""}" id="tde">Luyện đọc · Đề 1–10</button><button class="chip ${x.src==="bai"?"on":""}" id="tbai">Luyện đọc JPD113</button></div>
     <div class="koban" id="mtclk">⏱ ${mtFmt(Date.now()-G.mt.t0)}</div></div>
